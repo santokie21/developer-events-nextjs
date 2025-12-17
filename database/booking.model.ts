@@ -36,7 +36,7 @@ const BookingSchema = new Schema<IBooking>(
     }
 );
 
-// Pre-save hook to validate events exists before creating booking
+// Pre-save hook to validate event exists before creating booking
 BookingSchema.pre('save', async function (next) {
   const booking = this as IBooking;
 
@@ -53,7 +53,7 @@ BookingSchema.pre('save', async function (next) {
         return next(error);
       }
     } catch {
-      const validationError = new Error('Invalid events ID format or database error');
+      const validationError = new Error('Invalid event ID format or database error');
       validationError.name = 'ValidationError';
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-expect-error
@@ -75,8 +75,9 @@ BookingSchema.index({ eventId: 1, createdAt: -1 });
 // Create index on email for user booking lookups
 BookingSchema.index({ email: 1 });
 
-// Enforce one booking per events per email
+// Enforce one booking per event per email
 BookingSchema.index({ eventId: 1, email: 1 }, { unique: true, name: 'uniq_event_email' });
+
 const Booking = models.Booking || model<IBooking>('Booking', BookingSchema);
 
 export default Booking;
