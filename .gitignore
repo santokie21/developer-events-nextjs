@@ -17,6 +17,9 @@
 /.next/
 /out/
 
+#intellIJ files
+/.idea/
+
 # production
 /build
 
